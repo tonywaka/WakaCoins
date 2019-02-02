@@ -1,0 +1,28 @@
+{
+  "name": "wakacoins",
+  "version": "1.0.0",
+  "description": "ICO of Waka Coins or Tokens: My task ",
+  "main": "compile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Waka Coins"
+  },
+  "keywords": [
+    "Tokens",
+    "ICO",
+    "Waka",
+    "Coins",
+    "Dapp"
+  ],
+  "author": "Anthony Udezi",
+  "license": "ISC",
+  "devDependencies": {
+    "solc": "^0.5.3"
+  },
+  "dependencies": {
+    "fs-extra": "^7.0.1"
+  }
+}

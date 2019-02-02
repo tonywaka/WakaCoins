@@ -1,4 +1,3 @@
-
 // imports & defines
 
 const path = require('path');
@@ -111,6 +110,3 @@ const config = createConfiguration();
 const compiled = compileSources(config);
 errorHandling(compiled);
 writeOutput(compiled, binPath);
-
-
- 

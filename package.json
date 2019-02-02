@@ -1,28 +1,36 @@
 {
   "name": "wakacoins",
   "version": "1.0.0",
-  "description": "ICO of Waka Coins or Tokens: My task ",
-  "main": "compile.js",
+  "description": "Creation of tokens called WakaCoins for ICO",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "Waka Coins"
+    "url": "git+https://github.com/tonywaka/WakaCoins.git"
   },
   "keywords": [
-    "Tokens",
+    "tokens",
     "ICO",
-    "Waka",
-    "Coins",
-    "Dapp"
+    "waka",
+    "blockchain",
+    "solidity"
   ],
-  "author": "Anthony Udezi",
+  "author": "Anthony Waka Udezi",
   "license": "ISC",
-  "devDependencies": {
+  "bugs": {
+    "url": "https://github.com/tonywaka/WakaCoins/issues"
+  },
+  "homepage": "https://github.com/tonywaka/WakaCoins#readme",
+  "dependencies": {
+    "create-react-app": "^2.1.3",
+    "fs-extra": "^7.0.1",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "solc": "^0.5.3"
   },
-  "dependencies": {
-    "fs-extra": "^7.0.1"
+  "devDependencies": {
+    "react-router-dom": "^4.3.1"
   }
 }

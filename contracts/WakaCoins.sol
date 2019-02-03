@@ -1,4 +1,4 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity ^0.5.3;
 
 
 // I used only what is required in this specific project
@@ -8,6 +8,8 @@ interface ERC20 {
     event Approval(address indexed _owner, address indexed _spender, uint _value);
 }
 
+//You may deploy with one address and change owner to another address 
+//to receiver payment
 
 contract Owned {
     address public owner;
@@ -21,7 +23,7 @@ contract Owned {
             _;
     }
 
-    function transferOwnership(address newOwner) onlyOwner public {
+    function _transferOwnership(address newOwner) onlyOwner public {
         owner = newOwner;
     }
 }
@@ -64,6 +66,7 @@ contract WakaCoins is Owned, ERC20 {
     function invest(uint numberOfTokens) public {
         tokenBought =  numberOfTokens;
         tokensSold = tokensSold + tokenBought;
+        balanceOf[msg.sender] -= tokenBought; 
     }
     
 
@@ -82,12 +85,12 @@ contract WakaCoins is Owned, ERC20 {
      
     // Buy tokens from contract by sending ether first. 
     //Admin will issue tokens at end of ICO 
-    function payModule() payable public {
+    function payModule() private {
         _transfer(address(this), msg.sender, tokenCosts);   // makes the transfers
     }
     
     
-     /* Internal transfer, only can be called by this contract to issue tokens after ICO*/
+     /* Internal transfer can be called by this contract to issue tokens when investor pay ether */
     function _transfer(address _from, address _to, uint256 _value) internal {
         require (_to != address(0x0));                          // Prevent transfer to 0x0 address. Use burn() instead
         require (balanceOf[_from] >= _value);                   // Check if the sender has enough
@@ -98,18 +101,22 @@ contract WakaCoins is Owned, ERC20 {
     }
     
        
-    // Transfer tokens only when you received the payment of the investor. Only owner can run this
-    function transfer(address _to, uint256 _value) onlyOwner public returns (bool success) {
-        _transfer(owner, _to, _value);
-        return true;
-    }
+    // Transfer tokens only when you received the payment of the investor through bank account.
+    // Only owner can run this
+
+    //function transfer(address _to, uint256 _value) onlyOwner public payable returns (bool success) {
+     //   _transfer(owner, _to, _value);
+     //   balanceOf[msg.sender] -= tokenBought;
+       // return true;
+   // }
 
 //Refund ether if ICO target is not reached
-    function refund() onlyOwner payable public {
+//To aviod fees it is best practice for investors to call this module themselves to get a refund
+    function refund() payable public {
          require(tokensSold < softcap);
          uint256 value = balanceOf[msg.sender];
          balanceOf[msg.sender] = 0;
          msg.sender.transfer(value);
     }
-
+    
 }

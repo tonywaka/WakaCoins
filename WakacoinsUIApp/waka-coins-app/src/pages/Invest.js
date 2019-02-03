@@ -1,88 +1,24 @@
 import React, { Component } from "react";
-import web3 from "../web3";
-import wakacoins from "../smartContract/wakacoins";
+//import web3 from "../web3";
+//import WakaCoins from "../smartContract/WakaCoins";
 
-export default class Invest extends Component {
-  constructor(props) {
-    super(props);
-    this.nominateCandidate = this.nominateCandidate.bind(this);
-    this.candidateAddressOnChanged = this.candidateAddressOnChanged.bind(this);
-    this.state = {
-      userWalletAddress: "",
-      candidateAddress: ""
-    };
-  }
 
-  componentDidMount() {
-    this.getUserWalletAddress();
-  }
+import { Button, Progress } from 'semantic-ui-react'
 
-  getUserWalletAddress() {
-    web3.eth.getAccounts().then(accounts => {
-      if (accounts.length !== 0) {
-        this.setState({
-          userWalletAddress: accounts[0]
-        });
-      }
-    });
-  }
+export default class ProgressExampleIndicating extends Component {
+  state = { percent: 0 }
 
-  candidateAddressOnChanged(e) {
-    let candidateAddress = e.currentTarget.value;
+  invest = () =>
     this.setState({
-      candidateAddress: candidateAddress
-    });
-  }
-
-  nominateCandidate() {
-    wakacoins.methods
-      .nominateCandidate(this.state.candidateAddress)
-      .send({
-        from: this.state.userWalletAddress
-      })
-      .then(result => {
-        console.log(result);
-      });
-  }
+      percent: this.state.percent >= 100 ? 0 : this.state.percent + 20,
+    })
 
   render() {
     return (
       <div>
-        <div className="ui segment nominate">
-          <h3 className="ui center aligned header">
-            <i className="icon user" />
-            Nominate
-          </h3>
-          <form className="ui form nominate">
-            <div className="ui field">
-              <label>Name</label>
-              <input
-                type="text"
-                name="candidateName"
-                placeholder="Candidate Name"
-              />
-            </div>
-            <div className="ui field">
-              <label>Address</label>
-              <input
-                type="text"
-                name="candidateAddress"
-                placeholder="Candidate Address"
-                onChange={this.candidateAddressOnChanged}
-              />
-            </div>
-            <div className="ui field">
-              <button
-                className="ui primary basic button"
-                type="button"
-                onClick={this.nominateCandidate}
-              >
-                Nominate
-              </button>
-            </div>
-          </form>
-        </div>
+        <Progress percent={this.state.percent} indicating />
+        <Button onClick={this.invest}>Invest</Button>
       </div>
-    );
+    )
   }
 }

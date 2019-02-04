@@ -2,7 +2,6 @@ import React, { Component } from "react";
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "./App.css";
-//import Invest from "./pages/Invest";
 import Invest from './Pages/Invest.js';
 
 class App extends Component {
